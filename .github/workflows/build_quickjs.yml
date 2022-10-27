@@ -221,7 +221,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: qjs_v8_bin
-          path: qjs_v8_bin/
+          path: ./
           
       - name: Release
         uses: softprops/action-gh-release@v1
