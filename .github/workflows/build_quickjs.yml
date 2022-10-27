@@ -221,7 +221,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: qjs_v8_bin
-          path: ./
+          path: $GITHUB_WORKSPACE
           
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -231,4 +231,4 @@ jobs:
           tag_name: QJS_${{ github.event.inputs.tag_date }}
           draft: false
           prerelease: false
-          files: ./qjs_v8_bin.tgz
+          files: $GITHUB_WORKSPACE/qjs_v8_bin.tgz
