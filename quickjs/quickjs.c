@@ -54158,9 +54158,6 @@ JSValue JS_DupModule(JSContext *ctx, JSModuleDef* v)
 {
     return JS_DupValue(ctx, JS_MKPTR(JS_TAG_MODULE, v));
 }
-
-/*-------end fuctions for v8 api---------*/
-
 JSValue JS_GET_MODULE_NS(JSContext *ctx, JSModuleDef* v)
 {
     return js_get_module_ns(ctx, v);
@@ -54187,3 +54184,43 @@ int JS_ReleaseLoadedModule(JSContext *ctx, const char* path)
     JS_FreeAtom(ctx, name);
     return 0;
 }
+JSValue JS_GetPromiseResult(JSValue promise)
+{
+    JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
+    switch (s->promise_state)
+    {
+        case JS_PROMISE_PENDING:
+            break;
+        default:
+            return s->promise_result;
+            break;
+    }
+}
+int JS_GetPromiseState(JSValue promise)
+{
+    JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
+    return (int)s->promise_state;
+}
+int JS_IsPromise(JSValue promise)
+{
+    JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
+    return (int)(s != NULL);
+}
+int JS_FullfillOrRejectPromise(JSContext *ctx, JSValueConst promise,
+                                      JSValueConst value, int is_reject) 
+{
+    if (JS_GetPromiseState(promise) != 0) //pending
+        return 0;
+    fulfill_or_reject_promise(ctx, promise, value, is_reject);
+    return 1;
+}
+JSValue JS_NewSymbolByAtom(JSContext *ctx, JSAtom descr, int atom_type)
+{
+    return JS_NewSymbolFromAtom(ctx, descr, atom_type);
+}
+
+JSAtom JS_SymbolToAtom(JSContext *ctx, JSValue val)
+{
+    return js_symbol_to_atom(ctx, val);
+}
+/*-------end fuctions for v8 api---------*/
