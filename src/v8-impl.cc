@@ -86,7 +86,7 @@ Isolate* Promise::GetIsolate() {
 }
 
 Local<Value> Promise::Result() {
-    JSValue result = JS_GetPromiseResult(value_);
+    JSValue result = JS_GetPromiseResult(GetIsolate()->GetCurrentContext()->context_, value_);
 
     Value* val = GetIsolate()->Alloc<Value>();
     val->value_ = result;

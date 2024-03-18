@@ -1019,7 +1019,7 @@ JSValue JS_DupModule(JSContext *ctx, JSModuleDef* v);
 JSValue JS_GET_MODULE_NS(JSContext *ctx, JSModuleDef* v);
 int JS_ReleaseLoadedModule(JSContext *ctx, const char* path);
 
-JSValue JS_GetPromiseResult(JSValue promise);
+JSValue JS_GetPromiseResult(JSContext *ctx, JSValue promise);
 int JS_GetPromiseState(JSValue promise);
 bool JS_FullfillOrRejectPromise(JSContext *ctx, JSValueConst promise,
                                       JSValueConst value, int is_reject);

@@ -54184,16 +54184,15 @@ int JS_ReleaseLoadedModule(JSContext *ctx, const char* path)
     JS_FreeAtom(ctx, name);
     return 0;
 }
-JSValue JS_GetPromiseResult(JSValue promise)
+JSValue JS_GetPromiseResult(JSContext *ctx, JSValue promise)
 {
     JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
     switch (s->promise_state)
     {
         case JS_PROMISE_PENDING:
-            break;
+            return JS_Undefined();
         default:
-            return s->promise_result;
-            break;
+            return JS_DupValue(ctx, s->promise_result);
     }
 }
 int JS_GetPromiseState(JSValue promise)
