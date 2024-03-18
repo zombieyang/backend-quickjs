@@ -86,7 +86,7 @@ Isolate* Promise::GetIsolate() {
 }
 
 Local<Value> Promise::Result() {
-    JSValue result = JS_GetPromiseResult(GetIsolate()->GetCurrentContext()->context_, value_);
+    JSValue result = JS_GetPromiseRes   ult(GetIsolate()->GetCurrentContext()->context_, value_);
 
     Value* val = GetIsolate()->Alloc<Value>();
     val->value_ = result;
@@ -112,7 +112,6 @@ MaybeLocal<Promise::Resolver> Promise::Resolver::New(Local<Context> context) {
     JSValue resolving_funcs[2];
     auto ctx = Isolate->current_context_->context_;
     resolver->value_ = JS_NewPromiseCapability(ctx, resolving_funcs);
-    JS_DupValue(context->context_, resolver->value_);
     JS_FreeValue(ctx, resolving_funcs[0]);
     JS_FreeValue(ctx, resolving_funcs[1]);
 
