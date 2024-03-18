@@ -41961,7 +41961,7 @@ static JSValue js_compile_regexp(JSContext *ctx, JSValueConst pattern,
     str = JS_ToCStringLen2(ctx, &len, pattern, !(re_flags & LRE_FLAG_UTF16));
     if (!str)
         return JS_EXCEPTION;
-    re_bytecode_buf = lre_compile(&re_bytecode_len, error_msg,
+    re_bytecode_buf = lre_compile_puer(&re_bytecode_len, error_msg,
                                   sizeof(error_msg), str, len, re_flags, ctx);
     JS_FreeCString(ctx, str);
     if (!re_bytecode_buf) {
