@@ -839,7 +839,7 @@ public:
     V8_INLINE static Isolate* New(void* external_runtime, void* external_context) {
         if (external_context != nullptr) {
             return new Isolate(JS_GetRuntime((JSContext *)external_context));
-        } 
+        }
         else if (external_runtime != nullptr)
         {
             return new Isolate(external_runtime);
@@ -958,7 +958,7 @@ V8_INLINE Local<Boolean> False(Isolate* isolate) {
 }
 
 class V8_EXPORT Context : Data {
-private: 
+private:
     void SetWeakPtrToOpaque(std::shared_ptr<Context> sptr);
 
 public:
@@ -1124,6 +1124,7 @@ public:
     JSValue store_;
     
     V8_INLINE Local<T> Get(Isolate* isolate) const {
+        if (IsEmpty()) return Local<T>();
         Local<T> ret = val_.Clone(isolate, (Value*)(&this->store_));
         ret.IncRef(isolate);
         return ret;
