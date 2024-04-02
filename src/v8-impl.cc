@@ -132,11 +132,14 @@ Maybe<bool> Promise::Resolver::Reject(Local<Context> context, Local<Value> value
 
 Local<Symbol> Symbol::New(Isolate* isolate, Local<String> description) {
     auto symbol = isolate->Alloc<Symbol>();
+    auto context = isolate->current_context_->context_;
+    auto atom = JS_NewAtom(context, *String::Utf8Value(isolate, description));
     symbol->value_ = JS_NewSymbolByAtom(
         isolate->current_context_->context_, 
-        JS_NewAtom(isolate->current_context_->context_, *String::Utf8Value(isolate, description)),
+        atom,
         2
     );
+    JS_FreeAtom(context, atom);
     return Local<Symbol>(symbol);
 }
 
