@@ -493,6 +493,7 @@ int String::WriteUtf8(Isolate* isolate, char* buffer) const {
     memcpy(buffer, p, len);
     
     JS_FreeCString(isolate->current_context_->context_, p);
+    buffer[len] = 0;
     return (int)len;
 }
 
