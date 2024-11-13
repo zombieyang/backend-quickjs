@@ -197,6 +197,7 @@ Isolate::~Isolate() {
         delete values_[i];
     }
     values_.clear();
+    embedder_data_.clear();
     JS_FreeValueRT(runtime_, literal_values_[kEmptyStringIndex]);
     if (!is_external_runtime_) {
         JS_FreeRuntime(runtime_);
